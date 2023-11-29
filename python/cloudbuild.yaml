@@ -5,11 +5,13 @@ steps:
 
 # Set build context to app dir
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/market-data/VaR-mc-bq:$COMMIT_SHA', '-f', 'python/Dockerfile', '.']
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/market-data/VaR-mc-bq', '.']
+  dir: python
 
 # Push image to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/market-data/VaR-mc-bq:$COMMIT_SHA']
+  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/market-data/VaR-mc-bq']
+  dir: python
 
 images: 
-- 'us-central1-docker.pkg.dev/$PROJECT_ID/market-data/VaR-mc-bq:$COMMIT_SHA'
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/market-data/VaR-mc-bq'

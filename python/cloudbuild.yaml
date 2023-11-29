@@ -1,6 +1,5 @@
 timeout: "1600s" 
-options:
-  machineType: "N1_HIGHCPU_8"
+
 steps:
 
 # Set build context to app dir

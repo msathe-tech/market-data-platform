@@ -36,7 +36,7 @@ for ticker in tickers:
   sql = f'''WITH subquery AS (
     SELECT *,
           ROW_NUMBER() OVER (PARTITION BY RIC,  DATE(Date_Time) ORDER BY Date_Time DESC) AS row_num
-    FROM `dbd-sdlc-prod.LSE_NORMALISED.LSE_NORMALISED`
+    FROM `LSE_NORMALISED.LSE_NORMALISED`
     WHERE RIC IN ('{ticker}')
     AND (Date_Time BETWEEN TIMESTAMP('{start_date}') AND TIMESTAMP('{end_date}'))
     AND Type="Trade"

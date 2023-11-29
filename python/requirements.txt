@@ -5,3 +5,4 @@ google-cloud-bigquery
 google-cloud-bigquery-storage
 google-cloud-storage
 pandas-gbq
+pytz==2022.7

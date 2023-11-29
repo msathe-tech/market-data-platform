@@ -11,6 +11,7 @@ import pandas as pd
 import datetime as dt
 import random
 import csv
+import pytz
 from google.cloud import storage
 from google.cloud import bigquery
 
@@ -21,9 +22,12 @@ from google.cloud import bigquery
 
 
 tickers = ['ULVR.L','VOD.L', 'STAN.L', 'HSBA.L', 'CCH.L', 'BARC.L']
-start_date = '2013-11-20 00:00:00.000000'
-end_date = '2023-11-24 23:59:59.999999'
-
+current_timestamp = dt.now(pytz.utc)
+end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
+print(end_date)
+start_date = current_timestamp - pd.Timedelta(days= (20 * 365))
+start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
+print(start_date)
 
 # # Use BigQuery SQL to populate dataframe
 

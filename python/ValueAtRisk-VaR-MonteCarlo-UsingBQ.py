@@ -13,6 +13,8 @@ from datetime import datetime
 import random
 import csv
 import pytz
+import os
+import argparse
 from google.cloud import storage
 from google.cloud import bigquery
 
@@ -23,13 +25,34 @@ from google.cloud import bigquery
 
 
 tickers = ['ULVR.L','VOD.L', 'STAN.L', 'HSBA.L', 'CCH.L', 'BARC.L']
+years = 20
 current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(end_date)
-start_date = current_timestamp - pd.Timedelta(days= (20 * 365))
+days = 20
+venue = 'LSE'
+
+# # Define a function to retrieve value for a variable
+def get_value(name, default=None):
+    """Fetch name value from env var or command line argument"""
+    
+    # Try env var first
+    value = os.environ.get(name)  
+    if value is not None:
+        return value
+
+    # Then command line argument
+    parser = argparse.ArgumentParser() 
+    parser.add_argument(f"--{name}", default=default)
+    args = parser.parse_args()
+    
+    return vars(args)[name]
+
+days = get_value("DAYS", days)
+years = get_value("YEARS", years)
+start_date = current_timestamp - pd.Timedelta(days= (years * 365))
 start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(start_date)
-
 # # Use BigQuery SQL to populate dataframe
 
 # In[ ]:
@@ -131,8 +154,6 @@ def random_z_score():
     return np.random.normal(0, 1)
 
 ### Create a function to calculate scenarioGainLoss
-days = 20
-
 def scenario_gain_loss(portfolio_value, portfolio_std_dev, z_score, days):
     return portfolio_value * portfolio_expected_return * days + portfolio_value * portfolio_std_dev * z_score * np.sqrt(days)
 
@@ -170,7 +191,7 @@ for i in range(simulations):
 
 # This batch ID will be replaced by HPC batch job ID
 batch = random.randint(0, 10000)
-venue = 'LSE'
+
 
 # Create a GCS storage client
 storage_client = storage.Client()

@@ -31,6 +31,8 @@ end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(end_date)
 days = 20
 venue = 'LSE'
+batch = random.randint(0, 10000)
+simulations = 10000
 
 # # Define a function to fetch name value from env var or command line argument
 def get_value(name, default=None):
@@ -50,6 +52,8 @@ days = get_value("DAYS", days)
 years = get_value("YEARS", years)
 start_date = current_timestamp - pd.Timedelta(days= (years * 365))
 start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
+batch = get_value("BATCH_JOB_ID", batch)
+simulations = get_value("SIMULATIONS_PER_TASK", simulations)
 print(start_date)
 # # Use BigQuery SQL to populate dataframe
 
@@ -162,8 +166,7 @@ def scenario_gain_loss(portfolio_value, portfolio_std_dev, z_score, days):
 # In[ ]:
 
 
-### Run 10000 simulations
-simulations = 10000
+### Run simulations
 scenarioReturn = []
 
 for i in range(simulations):
@@ -188,7 +191,7 @@ for i in range(simulations):
 
 
 # This batch ID will be replaced by HPC batch job ID
-batch = random.randint(0, 10000)
+
 
 
 # Create a GCS storage client

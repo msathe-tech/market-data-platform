@@ -9,6 +9,7 @@
 import numpy as np
 import pandas as pd
 import datetime as dt
+from datetime import datetime
 import random
 import csv
 import pytz
@@ -22,7 +23,7 @@ from google.cloud import bigquery
 
 
 tickers = ['ULVR.L','VOD.L', 'STAN.L', 'HSBA.L', 'CCH.L', 'BARC.L']
-current_timestamp = dt.now(pytz.utc)
+current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(end_date)
 start_date = current_timestamp - pd.Timedelta(days= (20 * 365))

@@ -32,10 +32,8 @@ print(end_date)
 days = 20
 venue = 'LSE'
 
-# # Define a function to retrieve value for a variable
+# # Define a function to fetch name value from env var or command line argument
 def get_value(name, default=None):
-    """Fetch name value from env var or command line argument"""
-    
     # Try env var first
     value = os.environ.get(name)  
     if value is not None:

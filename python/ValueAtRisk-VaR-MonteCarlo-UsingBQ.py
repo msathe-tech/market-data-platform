@@ -38,7 +38,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument(f"--DAYS", type=int, default=days)
 parser.add_argument(f"--YEARS", type=int, default=years)
 parser.add_argument(f"--SIMULATIONS_PER_TASK", type=int, default=simulations)
+parser.add_argument(f"--TICKERS", type=str, default=tickers)
+
 args = parser.parse_args()
+
+
+# Split tickers string into list  
+tickers = args.TICKERS.split(',') 
+
+print(f"Portfolio = {tickers}")
 
 days = args.DAYS
 years = args.YEARS

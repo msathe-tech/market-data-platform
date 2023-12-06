@@ -8,9 +8,7 @@
                             "imageUri": "us-central1-docker.pkg.dev/duet-1/market-data/var-mc-bq",
                             "entrypoint": "python",
                             "commands": [
-                                "ValueAtRisk-VaR-MonteCarlo-UsingBQ.py",
-                                "--DAYS 25",
-                                "--YEARS 22"
+                                "app.py"
                             ]
                         }
                     }

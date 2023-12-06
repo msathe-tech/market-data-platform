@@ -1,8 +1,6 @@
 FROM python:3.10
 RUN pip install --upgrade pip
-WORKDIR /app
-COPY requirements.txt .
+COPY requirements.txt requirements.txt
+COPY ValueAtRisk-VaR-MonteCarlo-UsingBQ.py app.py
 RUN pip install -r requirements.txt
-COPY . .
-
-CMD ["python", "ValueAtRisk-VaR-MonteCarlo-UsingBQ.py"]
+CMD ["python", "app.py"]

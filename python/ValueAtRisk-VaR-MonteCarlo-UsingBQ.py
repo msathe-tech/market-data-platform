@@ -48,16 +48,16 @@ def get_value(name, default=None):
     
     return vars(args)[name]
 
-days = get_value("DAYS", days)
+days = get_value("DAYS", default=days)
 print(f"Forecasting for {days} days")
-years = get_value("YEARS", years)
+years = get_value("YEARS", default=years)
 print(f"Analyzing data of last {years} years")
 start_date = current_timestamp - pd.Timedelta(days= (years * 365))
 start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(start_date)
-batch = get_value("BATCH_JOB_ID", batch)
+batch = get_value("BATCH_JOB_ID", default=batch)
 print(f"Running task for Batch job ID: {batch}")
-simulations = get_value("SIMULATIONS_PER_TASK", simulations)
+simulations = get_value("SIMULATIONS_PER_TASK", default=simulations)
 print(f"Starging {simulations} per task")
 # # Use BigQuery SQL to populate dataframe
 

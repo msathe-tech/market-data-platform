@@ -6,8 +6,8 @@
                     {
                         "container": {
                             "imageUri": "us-central1-docker.pkg.dev/duet-1/market-data/var-mc-bq",
-                            "entrypoint": "python",
                             "commands": [
+                                "python", 
                                 "app.py"
                             ]
                         }

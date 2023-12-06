@@ -21,8 +21,8 @@
                 },
                 "maxRetryCount": 0
             },
-            "taskCount": 1,
-            "parallelism": 1
+            "taskCount": 2,
+            "parallelism": 2
         }
     ],
     "allocationPolicy": {
@@ -38,7 +38,7 @@
         
         "instances": [
             {
-                "policy": { "machineType": "n2-highcpu-2" }
+                "policy": { "machineType": "e2-standard-8" }
             }
         ]
     },

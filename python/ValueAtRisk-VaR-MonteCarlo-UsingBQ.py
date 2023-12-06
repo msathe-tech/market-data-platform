@@ -43,21 +43,22 @@ def get_value(name, default=None):
 
     # Then command line argument
     parser = argparse.ArgumentParser() 
-    parser.add_argument(f"--{name}", default=default)
+    parser.add_argument(f"--{name}", type=str, default=default)
     args = parser.parse_args()
-    
-    return vars(args)[name]
+    param = vars(args)[name]
+    print("CLI arg {param}")
+    return param 
 
-days = get_value("DAYS", default=days)
+days = int(get_value("DAYS", default=days))
 print(f"Forecasting for {days} days")
-years = get_value("YEARS", default=years)
+years = int(get_value("YEARS", default=years))
 print(f"Analyzing data of last {years} years")
 start_date = current_timestamp - pd.Timedelta(days= (years * 365))
 start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(start_date)
 batch = get_value("BATCH_JOB_ID", default=batch)
 print(f"Running task for Batch job ID: {batch}")
-simulations = get_value("SIMULATIONS_PER_TASK", default=simulations)
+simulations = int(get_value("SIMULATIONS_PER_TASK", default=simulations))
 print(f"Starging {simulations} per task")
 # # Use BigQuery SQL to populate dataframe
 

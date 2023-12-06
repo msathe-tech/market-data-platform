@@ -9,8 +9,8 @@
                             "entrypoint": "python",
                             "commands": [
                                 "ValueAtRisk-VaR-MonteCarlo-UsingBQ.py",
-                                "--DAYS=25",
-                                "--YEARS=22"
+                                "--DAYS 25",
+                                "--YEARS 22"
                             ]
                         }
                     }

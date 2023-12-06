@@ -34,31 +34,26 @@ venue = 'LSE'
 batch = random.randint(0, 10000)
 simulations = 10000
 
-# # Define a function to fetch name value from env var or command line argument
-def get_value(name, default=None):
-    # Try env var first
-    value = os.environ.get(name)  
-    if value is not None:
-        return value
+parser = argparse.ArgumentParser() 
+parser.add_argument(f"--DAYS", type=int, default=days)
+parser.add_argument(f"--YEARS", type=int, default=years)
+parser.add_argument(f"--SIMULATIONS_PER_TASK", type=int, default=simulations)
+args = parser.parse_args()
 
-    # Then command line argument
-    parser = argparse.ArgumentParser() 
-    parser.add_argument(f"--{name}", type=str, default=default)
-    args = parser.parse_args()
-    param = vars(args)[name]
-    print("CLI arg {param}")
-    return param 
+days = args.DAYS
+years = args.YEARS
 
-days = int(get_value("DAYS", default={days}))
 print(f"Forecasting for {days} days")
-years = int(get_value("YEARS", default={years}))
 print(f"Analyzing data of last {years} years")
 start_date = current_timestamp - pd.Timedelta(days= (years * 365))
 start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(start_date)
-batch = get_value("BATCH_JOB_ID", default={batch})
+value = os.environ.get("BATCH_JOB_ID")  
+if value is not None:
+    batch = value
 print(f"Running task for Batch job ID: {batch}")
-simulations = int(get_value("SIMULATIONS_PER_TASK", default={simulations}))
+
+simulations = args.SIMULATIONS_PER_TASK
 print(f"Starging {simulations} per task")
 # # Use BigQuery SQL to populate dataframe
 

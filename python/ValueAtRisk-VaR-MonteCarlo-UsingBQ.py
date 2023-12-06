@@ -24,7 +24,7 @@ from google.cloud import bigquery
 # In[ ]:
 
 
-tickers = ['ULVR.L','VOD.L', 'STAN.L', 'HSBA.L', 'CCH.L', 'BARC.L']
+tickers = 'ULVR.L,VOD.L,STAN.L,HSBA.L,CCH.L,BARC.L'
 years = 20
 current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")

@@ -6,21 +6,23 @@
                     {
                         "container": {
                             "imageUri": "us-central1-docker.pkg.dev/duet-1/market-data/var-mc-bq",
+                            "entrypoint": "python",
                             "commands": [
-                                "python", 
-                                "app.py"
+                                "app.py",
+                                "--DAYS=30",
+                                "--YEARS=23"
                             ]
                         }
                     }
                 ],
                 "computeResource": {
                     "cpuMilli": 2000,
-                    "memoryMib": 10000
+                    "memoryMib": 2000
                 },
                 "maxRetryCount": 0
             },
-            "taskCount": 2,
-            "parallelism": 2
+            "taskCount": 200,
+            "parallelism": 200
         }
     ],
     "allocationPolicy": {

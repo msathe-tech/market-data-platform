@@ -9,20 +9,20 @@
                             "entrypoint": "python",
                             "commands": [
                                 "app.py",
-                                "--DAYS=30",
+                                "--DAYS=10",
                                 "--YEARS=23"
                             ]
                         }
                     }
                 ],
                 "computeResource": {
-                    "cpuMilli": 2000,
-                    "memoryMib": 2000
+                    "cpuMilli": 1500,
+                    "memoryMib": 2500
                 },
                 "maxRetryCount": 0
             },
-            "taskCount": 200,
-            "parallelism": 200
+            "taskCount": 50,
+            "parallelism": 50
         }
     ],
     "allocationPolicy": {

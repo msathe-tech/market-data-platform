@@ -217,7 +217,7 @@ task_id = os.environ.get("TASK_ID")
 print(f"Current task ID: {task_id}")
 
 # Create a directory named 'my-directory' in the bucket
-directory_name = "batch-" + str(task_id) + "/"
+directory_name = "batch-" + str(batch) + "-task" + str(task_id) + "/"
 print(f"Creating directory: {directory_name}")
 # Create a new folder
 bucket = storage_client.bucket(bucket_name)
@@ -225,7 +225,7 @@ blob = bucket.blob(directory_name)
 blob.upload_from_string(' ')
 
 # Create a file
-csv_file_name = str(task_id) + '-1.csv'
+csv_file_name = str(task_id) + '.csv'
 print(f"Creating file: {csv_file_name}")
 with open(csv_file_name, 'w') as csvfile:
     csv_writer = csv.writer(csvfile)

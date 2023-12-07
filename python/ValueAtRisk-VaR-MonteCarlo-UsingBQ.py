@@ -213,11 +213,11 @@ storage_client = storage.Client()
 # Specify the project ID and bucket name
 project_id = 'duet-1'
 bucket_name = 'duet-1-refinitiv-var-mc--simulations'
-task_id = os.environ.get("TASK_ID")
-print(f"Current task ID: {task_id}")
+task_index = os.environ.get("BATCH_TASK_INDEX")
+print(f"Current task ID: {task_index}")
 
 # Create a directory named 'my-directory' in the bucket
-directory_name = "batch-" + str(batch) + "-task" + str(task_id) + "/"
+directory_name = "batch-" + str(batch) + "/"
 print(f"Creating directory: {directory_name}")
 # Create a new folder
 bucket = storage_client.bucket(bucket_name)
@@ -225,7 +225,7 @@ blob = bucket.blob(directory_name)
 blob.upload_from_string(' ')
 
 # Create a file
-csv_file_name = str(task_id) + '.csv'
+csv_file_name = "task-" +str(task_index) + '.csv'
 print(f"Creating file: {csv_file_name}")
 with open(csv_file_name, 'w') as csvfile:
     csv_writer = csv.writer(csvfile)

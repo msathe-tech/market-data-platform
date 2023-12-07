@@ -185,6 +185,8 @@ for i in range(simulations):
     scenarioReturn.append(scenario_gain_loss(portfolio_value, portfolio_std_dev, z_score, days))
 
 
+# Create a dataframe for a list scenarioReturn
+
 # # Populate the simulation output to GCS
 # The HPC can run millions of simulations simultaenously, each worker pumping output of
 # 
@@ -237,10 +239,12 @@ gcs_csv_path = directory_name + csv_file_name
 blob = bucket.blob(gcs_csv_path)
 blob.upload_from_filename(csv_file_name)
 
+print(f"Uploaded {csv_file_name} to {gcs_csv_path}")
+
+
 # Verify the directory creation
 print(bucket.list_blobs())
-blob.close()
-bucket.close()
+
 
 # # Populate the simulation output to BQ
 

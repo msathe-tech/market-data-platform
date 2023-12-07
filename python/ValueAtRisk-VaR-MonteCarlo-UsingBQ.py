@@ -217,7 +217,7 @@ task_index = os.environ.get("BATCH_TASK_INDEX")
 print(f"Current task ID: {task_index}")
 
 # Create a directory named 'my-directory' in the bucket
-directory_name = "batch-" + str(batch) + "/"
+directory_name = "batch-" + str(batch) + "task-" + str(task_index) + "/"
 print(f"Creating directory: {directory_name}")
 # Create a new folder
 bucket = storage_client.bucket(bucket_name)

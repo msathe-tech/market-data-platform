@@ -91,10 +91,11 @@ for ticker in tickers:
   data = pd.read_gbq(sql)
   data.set_index('Date', inplace=True)
   close_df[ticker] = data['Price'].astype(float)
-  print(close_df[ticker])
+  print(f"Retrieved data for {ticker}")
+  #print(close_df[ticker])
 
 
-print(close_df)
+#print(close_df)
 
 
 # # Calculate Daily Log Returns
@@ -107,7 +108,8 @@ print(close_df)
 log_returns = np.log(close_df/close_df.shift(1))
 log_returns  = log_returns.dropna()
 
-print(log_returns)
+print("Computed log returns ")
+#print(log_returns)
 
 log_returns
 
@@ -137,7 +139,8 @@ def standard_deviation (weights, cov_matrix):
 
 ### Create a covariance matrix for all the securities
 cov_matrix = log_returns.cov()
-print(cov_matrix)
+print("Computed covariance matrix")
+#print(cov_matrix)
 
 
 # # Calculate Portfolio Expected Return and Standard Deviation
@@ -211,7 +214,7 @@ bucket_name = 'duet-1-refinitiv-var-mc--simulations'
 
 # Create a directory named 'my-directory' in the bucket
 directory_name = "batch-" + str(batch) + "/"
-
+print(f"Creating directory: {directory_name}")
 # Create a new folder
 bucket = storage_client.bucket(bucket_name)
 blob = bucket.blob(directory_name)
@@ -219,6 +222,7 @@ blob.upload_from_string(' ')
 
 # Create a file
 csv_file_name = str(batch) + '-1.csv'
+print(f"Creating file: {csv_file_name}")
 with open(csv_file_name, 'w') as csvfile:
     csv_writer = csv.writer(csvfile)
     csv_writer.writerow(['BATCH', 'VENUE', 'PORTFOLIO', 'PORTFOLIO_VALUE', 'START_DATE', 'END_DATE', 'DAYS', 'RETURN'])
@@ -235,7 +239,10 @@ blob.upload_from_filename(csv_file_name)
 
 # Verify the directory creation
 print(bucket.list_blobs())
+blob.close()
+bucket.close()
 
+# # Populate the simulation output to BQ
 
 
 # # Copy data from GCS to BQ

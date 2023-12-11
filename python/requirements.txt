@@ -4,5 +4,6 @@ datetime
 google-cloud-bigquery
 google-cloud-bigquery-storage
 google-cloud-storage
+google-cloud-pubsub
 pandas-gbq
 pytz==2022.7

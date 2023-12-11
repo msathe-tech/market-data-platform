@@ -67,7 +67,7 @@ if value is not None:
 print(f"Running task for Batch job ID: {batch}")
 
 simulations = args.SIMULATIONS_PER_TASK
-print(f"Starging {simulations} per task")
+print(f"Starting {simulations} per task")
 # # Use BigQuery SQL to populate dataframe
 
 # In[ ]:
@@ -209,8 +209,8 @@ for i in range(simulations):
     json_string = json.dumps(json_data)
     print(json_string)
     # Replace the Project ID and Topic ID
-    topic_path = publisher.topic_path('duet-1', 'projects/duet-1/topics/var-returns')
+    topic_path = publisher.topic_path('duet-1', 'var-returns')
     future = publisher.publish(topic_path, data=json_string.encode("utf-8"))
-    print(f"Published message id" f"{future.result()}")
+    #print(f"Published message id" f"{future.result()}")
 
     # scenarioReturn.append(returnValue)

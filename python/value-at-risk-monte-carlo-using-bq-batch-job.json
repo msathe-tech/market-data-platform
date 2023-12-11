@@ -21,8 +21,8 @@
                 },
                 "maxRetryCount": 0
             },
-            "taskCount": 50,
-            "parallelism": 50
+            "taskCount": 1,
+            "parallelism": 1
         }
     ],
     "allocationPolicy": {

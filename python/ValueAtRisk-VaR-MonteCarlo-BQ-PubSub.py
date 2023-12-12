@@ -19,8 +19,10 @@ from google.cloud import storage
 from google.cloud import bigquery
 import json
 from google.cloud import pubsub_v1
-
-
+from concurrent import futures
+from typing import Callable
+# from avro.schema import RecordSchema, Field, PrimitiveSchema
+# from avro.io import DatumWriter
 #
 
 
@@ -29,7 +31,7 @@ from google.cloud import pubsub_v1
 # In[ ]:
 
 
-tickers = 'ULVR.L,VOD.L,STAN.L,HSBA.L,CCH.L,BARC.L'
+tickersList = 'ULVR.L,VOD.L,STAN.L,HSBA.L,CCH.L,BARC.L'
 years = 20
 current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
@@ -37,13 +39,13 @@ print(end_date)
 days = 20
 venue = 'LSE'
 batch = random.randint(0, 10000)
-simulations = 100
+simulations = 2
 
 parser = argparse.ArgumentParser() 
 parser.add_argument(f"--DAYS", type=int, default=days)
 parser.add_argument(f"--YEARS", type=int, default=years)
 parser.add_argument(f"--SIMULATIONS_PER_TASK", type=int, default=simulations)
-parser.add_argument(f"--TICKERS", type=str, default=tickers)
+parser.add_argument(f"--TICKERS", type=str, default=tickersList)
 
 args = parser.parse_args()
 
@@ -195,12 +197,48 @@ publisher = pubsub_v1.PublisherClient()
 task_index = os.environ.get("BATCH_TASK_INDEX")
 print(f"Current task ID: {task_index}")
 
+project_id = "'duet-1'"
+topic_id = "var-returns"
+
+publisher = pubsub_v1.PublisherClient()
+topic_path = publisher.topic_path(project_id, topic_id)
+publish_futures = []
+
+# Define the main schema for the dictionary
+# schema = RecordSchema(
+#     name="PortfolioData",
+#     namespace="com.example",
+#     fields=[
+#         Field("batch", PrimitiveSchema(type="string")),
+#         Field("venue", PrimitiveSchema(type="string")),
+#         Field("portfolio", PrimitiveSchema(type="string")),
+#         Field("portfolio_value", PrimitiveSchema(type="double")),
+#         Field("start_date", PrimitiveSchema(type="string")),
+#         Field("end_date", PrimitiveSchema(type="string")),
+#         Field("days", PrimitiveSchema(type="int")),
+#         Field("return", PrimitiveSchema(type="double")),
+#     ],
+# )
+
+def get_callback(
+    publish_future: pubsub_v1.publisher.futures.Future, data: str
+) -> Callable[[pubsub_v1.publisher.futures.Future], None]:
+    def callback(publish_future: pubsub_v1.publisher.futures.Future) -> None:
+        try:
+            # Wait 60 seconds for the publish call to succeed.
+            print(publish_future.result(timeout=60))
+        except futures.TimeoutError:
+            print(f"Publishing {data} timed out.")
+
+    return callback
+
+
 for i in range(simulations):
     z_score = random_z_score()
     returnValue = scenario_gain_loss(portfolio_value, portfolio_std_dev, z_score, days)
     json_data['batch'] = batch
     json_data['venue'] = venue
-    json_data['portfolio'] = tickers
+    json_data['portfolio'] = tickersList
     json_data['portfolio_value'] = portfolio_value
     json_data['start_date'] = start_date
     json_data['end_date'] = end_date
@@ -208,9 +246,12 @@ for i in range(simulations):
     json_data['return'] = returnValue
     json_string = json.dumps(json_data)
     print(json_string)
-    # Replace the Project ID and Topic ID
-    topic_path = publisher.topic_path('duet-1', 'var-returns')
-    future = publisher.publish(topic_path, data=json_string.encode("utf-8"))
-    #print(f"Published message id" f"{future.result()}")
-
+    # future = publisher.publish(topic_path, data=json_string.encode("utf-8"))
+    publish_future = publisher.publish(topic_path, data=json_string.encode("utf-8"))
+    # Non-blocking. Publish failures are handled in the callback function.
+    publish_future.add_done_callback(get_callback(publish_future, data))
+    publish_futures.append(publish_future)
     # scenarioReturn.append(returnValue)
+
+# Wait for all the publish futures to resolve before exiting.
+futures.wait(publish_futures, return_when=futures.ALL_COMPLETED)

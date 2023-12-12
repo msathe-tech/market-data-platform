@@ -8,9 +8,7 @@
                             "imageUri": "us-central1-docker.pkg.dev/duet-1/market-data/var-mc-bq",
                             "entrypoint": "python",
                             "commands": [
-                                "app.py",
-                                "--DAYS=10",
-                                "--YEARS=23"
+                                "app.py"
                             ]
                         }
                     }

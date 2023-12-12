@@ -21,9 +21,6 @@ import json
 from google.cloud import pubsub_v1
 from concurrent import futures
 from typing import Callable
-# from avro.schema import RecordSchema, Field, PrimitiveSchema
-# from avro.io import DatumWriter
-#
 
 
 # # Setup tickers array
@@ -234,6 +231,7 @@ def get_callback(
 
 
 for i in range(simulations):
+    json_data = {}
     z_score = random_z_score()
     returnValue = scenario_gain_loss(portfolio_value, portfolio_std_dev, z_score, days)
     json_data['batch'] = batch
@@ -246,12 +244,12 @@ for i in range(simulations):
     json_data['return'] = returnValue
     json_string = json.dumps(json_data)
     print(json_string)
-    # future = publisher.publish(topic_path, data=json_string.encode("utf-8"))
-    publish_future = publisher.publish(topic_path, data=json_string.encode("utf-8"))
+    publish_future = publisher.publish(topic_path, json_string.encode("utf-8"))
     # Non-blocking. Publish failures are handled in the callback function.
-    publish_future.add_done_callback(get_callback(publish_future, data))
+    publish_future.add_done_callback(get_callback(publish_future, json_string))
     publish_futures.append(publish_future)
     # scenarioReturn.append(returnValue)
 
 # Wait for all the publish futures to resolve before exiting.
 futures.wait(publish_futures, return_when=futures.ALL_COMPLETED)
+print(f"Published messages with error handler to {topic_path}.")

@@ -7,6 +7,7 @@ from datetime import datetime
 import random
 import os
 import pytz
+import pandas as pd
 
 tickersList = 'ULVR.L,VOD.L,STAN.L,HSBA.L,CCH.L,BARC.L'
 years = 20

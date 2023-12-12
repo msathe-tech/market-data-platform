@@ -29,7 +29,7 @@ print(f"Running task for Batch job ID: {batch}")
 
 # TODO(developer)
 project_id = "duet-1"
-topic_id = "simple-topic"
+topic_id = "var-returns"
 
 publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path(project_id, topic_id)

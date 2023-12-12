@@ -6,6 +6,7 @@ import json
 from datetime import datetime
 import random
 import os
+import pytz
 
 tickersList = 'ULVR.L,VOD.L,STAN.L,HSBA.L,CCH.L,BARC.L'
 years = 20

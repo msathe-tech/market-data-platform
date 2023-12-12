@@ -194,28 +194,12 @@ publisher = pubsub_v1.PublisherClient()
 task_index = os.environ.get("BATCH_TASK_INDEX")
 print(f"Current task ID: {task_index}")
 
-project_id = "'duet-1'"
+project_id = "duet-1"
 topic_id = "var-returns"
 
 publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path(project_id, topic_id)
 publish_futures = []
-
-# Define the main schema for the dictionary
-# schema = RecordSchema(
-#     name="PortfolioData",
-#     namespace="com.example",
-#     fields=[
-#         Field("batch", PrimitiveSchema(type="string")),
-#         Field("venue", PrimitiveSchema(type="string")),
-#         Field("portfolio", PrimitiveSchema(type="string")),
-#         Field("portfolio_value", PrimitiveSchema(type="double")),
-#         Field("start_date", PrimitiveSchema(type="string")),
-#         Field("end_date", PrimitiveSchema(type="string")),
-#         Field("days", PrimitiveSchema(type="int")),
-#         Field("return", PrimitiveSchema(type="double")),
-#     ],
-# )
 
 def get_callback(
     publish_future: pubsub_v1.publisher.futures.Future, data: str

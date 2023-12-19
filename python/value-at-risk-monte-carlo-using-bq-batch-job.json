@@ -15,7 +15,7 @@
                 ],
                 "computeResource": {
                     "cpuMilli": 2000,
-                    "memoryMib": 1500
+                    "memoryMib": 2000
                 },
                 "maxRetryCount": 0
             },
@@ -36,7 +36,7 @@
         
         "instances": [
             {
-                "policy": { "machineType": "n2-highcpu-2" }
+                "policy": { "machineType": "e2-highcpu-16" }
             }
         ]
     },

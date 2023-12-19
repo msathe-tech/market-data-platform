@@ -14,13 +14,13 @@
                     }
                 ],
                 "computeResource": {
-                    "cpuMilli": 1000,
-                    "memoryMib": 2500
+                    "cpuMilli": 1200,
+                    "memoryMib": 2000
                 },
                 "maxRetryCount": 0
             },
-            "taskCount": 1,
-            "parallelism": 1
+            "taskCount": 1000,
+            "parallelism": 1000
         }
     ],
     "allocationPolicy": {

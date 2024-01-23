@@ -36,7 +36,7 @@ print(end_date)
 days = 10
 venue = 'LSE'
 batch = random.randint(0, 10000)
-simulations = 1000
+simulations = 10000
 
 parser = argparse.ArgumentParser() 
 parser.add_argument(f"--DAYS", type=int, default=days)

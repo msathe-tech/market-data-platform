@@ -29,14 +29,14 @@ from typing import Callable
 
 
 tickersList = 'ULVR.L,VOD.L,STAN.L,HSBA.L'
-years = 2
+years = 1
 current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(end_date)
-days = 20
+days = 10
 venue = 'LSE'
 batch = random.randint(0, 10000)
-simulations = 10000
+simulations = 1000
 
 parser = argparse.ArgumentParser() 
 parser.add_argument(f"--DAYS", type=int, default=days)

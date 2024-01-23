@@ -33,7 +33,7 @@ years = 1
 current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(end_date)
-days = 10
+days = 9
 venue = 'LSE'
 batch = random.randint(0, 10000)
 simulations = 10000

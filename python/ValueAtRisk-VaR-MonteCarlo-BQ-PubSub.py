@@ -28,7 +28,7 @@ from typing import Callable
 # In[ ]:
 
 
-tickersList = 'ULVR.L,VOD.L,STAN.L,HSBA.L'
+tickersList = 'ULVR.L,VOD.L'
 years = 1
 current_timestamp = datetime.now(pytz.utc)
 end_date = current_timestamp.strftime("%Y-%m-%d %H:%M:%S.%f UTC")

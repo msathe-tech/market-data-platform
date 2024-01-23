@@ -36,7 +36,7 @@
         
         "instances": [
             {
-                "policy": { "machineType": "e2-highcpu-8" }
+                "policy": { "machineType": "e2-highcpu-4" }
             }
         ]
     },

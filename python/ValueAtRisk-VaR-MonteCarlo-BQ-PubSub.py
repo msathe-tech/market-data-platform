@@ -57,7 +57,8 @@ years = args.YEARS
 
 print(f"Forecasting for {days} days")
 print(f"Analyzing data of last {years} years")
-start_date = current_timestamp - pd.Timedelta(days= (years * 365))
+# Hardcoding to 120 days for demo
+start_date = current_timestamp - pd.Timedelta(days= (120))
 start_date = start_date.strftime("%Y-%m-%d %H:%M:%S.%f UTC")
 print(start_date)
 value = os.environ.get("BATCH_JOB_ID")  
